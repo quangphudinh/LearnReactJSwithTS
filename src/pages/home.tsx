@@ -3,6 +3,7 @@ import CardPizza from "../sections/CardPizza";
 import { pizza } from "../models/pizza";
 import ItemPizza from "../sections/ItemPizza";
 import CountPizza from "../sections/CountPizza";
+import { title } from "process";
 
 const HomePage = () => {
 
@@ -24,19 +25,38 @@ const HomePage = () => {
 
     const handleRemovePizza = (id : number) =>{
         console.log('ID data removed : ', id)
-        const indexPizza = pizzas.findIndex(item => item.id === id);
-        let newPizzas = [...pizzas];
+        // const indexPizza = pizzas.findIndex(item => item.id === id);
+         const indexPizza = pizzaAPI.findIndex(item => item.id === id);
+        let newPizzas = [...pizzaAPI];
         newPizzas.splice(indexPizza , 1);
-        setPizzas(newPizzas);
+        // setPizzas(newPizzas);
+        setPizzaAPI(newPizzas)
     }
 
     const [count ,  setCount] = useState(0);
     const [isCount , setIsCount] = useState(false);
 
+    // useEffect(() => {
+    //     console.log('Render useEffect');
+    //     setPizzas([...pizzas, {id : pizzas.length + 1 , title : 'Pizza Test' , description : 'test useEffect 123'}])
+    // },[count]);
+
+    const [pizzaAPI , setPizzaAPI] = useState<pizza[]>([]);
+    
     useEffect(() => {
-        console.log('Render useEffect');
-        setPizzas([...pizzas, {id : pizzas.length + 1 , title : 'Pizza Test' , description : 'test useEffect 123'}])
-    },[count]);
+        fetch('https://dummyjson.com/products')
+            .then(res => res.json())
+            .then(data => {
+                const temp : pizza[] = data.products.map((item : any) => ({
+                    id : item.id,
+                    title : item.title,
+                    description : item.description,
+                    thumbnail : item.thumbnail
+                }));
+                setPizzaAPI(temp)
+            }).catch((err) => console.error(err));
+        console.log(pizzaAPI)
+    },[])
 
     return(
         <>
@@ -44,8 +64,10 @@ const HomePage = () => {
             <div style={{height : 'calc(100vh - 309px)', padding : '4rem 4rem' , overflowY : 'auto'}}>
                 <div className="wrapper-card-items">
                     {
-                        pizzas.map(item =>  
-                            <CardPizza key={item.id} id={item.id} title={item.title} description={item.description} handleRemovePizza={handleRemovePizza}/>)
+                        // pizzas.map(item =>  
+                        //     <CardPizza key={item.id} id={item.id} title={item.title} description={item.description} handleRemovePizza={handleRemovePizza}/>)
+                     pizzaAPI.map(item =>  
+                            <CardPizza key={item.id} id={item.id} title={item.title} description={item.description} thumbnail={item.thumbnail} handleRemovePizza={handleRemovePizza}/>)
                     }
                     <ItemPizza title={person.title} description={person.description} handleChangePerson={handleChangePerson}/>
                 </div>

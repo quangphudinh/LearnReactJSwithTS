@@ -12,12 +12,13 @@ const CardPizza = (
         id,
         title,
         description,
+        thumbnail,
         handleRemovePizza
     } : Props
 ) => {
     return(
         <div className="card-items" onClick={() => handleRemovePizza(id!)}>
-            <img className="card-image-pizza" src={logo} alt='react-logo'/>
+            <img className="card-image-pizza" src={thumbnail} alt='react-logo'/>
             <div style={{height : '50%' , width : '100%'}}></div>
             <div className='card-content'>
                 <div>
