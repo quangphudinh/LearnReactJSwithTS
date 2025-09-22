@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import CardPizza from "../sections/CardPizza";
 import { pizza } from "../models/pizza";
 import ItemPizza from "../sections/ItemPizza";
+import CountPizza from "../sections/CountPizza";
 
 const HomePage = () => {
 
@@ -30,7 +31,7 @@ const HomePage = () => {
     }
 
     const [count ,  setCount] = useState(0);
-    const [isView , setIsView] = useState(true);
+    const [isCount , setIsCount] = useState(false);
 
     useEffect(() => {
         console.log('Render useEffect');
@@ -48,12 +49,17 @@ const HomePage = () => {
                     }
                     <ItemPizza title={person.title} description={person.description} handleChangePerson={handleChangePerson}/>
                 </div>
-                
+                <br></br>
+                <button className="btn-main" onClick={() => setIsCount(true)}>Open Count</button>
+                <button className="btn-main" onClick={() => setIsCount(false)}>Close Count</button>
+                <div>{count}</div>
+                {
+                    isCount && <CountPizza count={count} setCount={(count) => setCount(count)}/>
+                }
             </div>       
             <div>
                 <button className="btn-main" onClick={() => setCount(count + 1)}>Count Inscrease</button>
             </div>
-            {isView && <div>WELLCOME TO VIETNAM</div>}
         </>
     )
 }
