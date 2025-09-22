@@ -44,9 +44,24 @@ const HomePage = () => {
     const [pizzaAPI , setPizzaAPI] = useState<pizza[]>([]);
     
     useEffect(() => {
-        fetch('https://dummyjson.com/products')
-            .then(res => res.json())
-            .then(data => {
+        // fetch('https://dummyjson.com/products')
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         const temp : pizza[] = data.products.map((item : any) => ({
+        //             id : item.id,
+        //             title : item.title,
+        //             description : item.description,
+        //             thumbnail : item.thumbnail
+        //         }));
+        //         setPizzaAPI(temp)
+        //     }).catch((err) => console.error(err));
+        // console.log(pizzaAPI)
+
+        const dataFetch = async () => {
+            try {
+                const res = await fetch('https://dummyjson.com/products');
+                const data = await res.json();
+                console.log(data);
                 const temp : pizza[] = data.products.map((item : any) => ({
                     id : item.id,
                     title : item.title,
@@ -54,8 +69,11 @@ const HomePage = () => {
                     thumbnail : item.thumbnail
                 }));
                 setPizzaAPI(temp)
-            }).catch((err) => console.error(err));
-        console.log(pizzaAPI)
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        dataFetch();
     },[])
 
     return(
