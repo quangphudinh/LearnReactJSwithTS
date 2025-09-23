@@ -4,12 +4,13 @@ import { IcSprinner } from "../icons/IcSprinner";
 type Props = {
     loading? : boolean;
     children? : ReactNode;
+    onClick?:() => void;
 }
 
-const ButtonField = ({loading , children} : Props) => {
+const ButtonField = ({loading , children , onClick} : Props) => {
     return(
         <>
-            <div className="btn-main">
+            <div className="btn-main" onClick={onClick && onClick}>
                 {!loading
                     ?children
                     : <div style={{display : 'flex' , alignItems : 'center' , columnGap : '.5rem', color: '#fff'}}>

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import CardPizza from "../sections/CardPizza";
 import { pizza } from "../models/pizza";
 import ItemPizza from "../sections/ItemPizza";
@@ -63,7 +63,7 @@ const HomePage = () => {
             try {
                 const res = await fetch('https://dummyjson.com/products');
                 const data = await res.json();
-                console.log(data);
+                //console.log(data);
                 const temp : pizza[] = data.products.map((item : any) => ({
                     id : item.id,
                     title : item.title,
@@ -85,6 +85,13 @@ const HomePage = () => {
     const tinhtong = useMemo(() => {
         return count + 1;
     },[])
+
+    //useRef
+    // Mỗi khi giá trị của useRef thay đổi sẽ không làm re-render component
+    // Có thể làm thuộc tính tác động trực tiếp vào thẻ DOM
+    const [page , setPage] = useState<number>(1);
+    const pageRef = useRef<number>(1);
+    const [isLoading , setIsLoading] = useState(false)
 
     return(
         <>
@@ -109,14 +116,15 @@ const HomePage = () => {
                     isCount && <CountPizza count={count} setCount={(count) => setCount(count)}/>
                 } */}
                 
+                <button onClick={() => console.log('page reff : ' , pageRef.current)}>Show Ref Value</button>
                 <div style={{display : 'flex', justifyContent : 'center' , width : '100%'}}>
-                    <ButtonField>Show more</ButtonField>
+                    <ButtonField loading = {isLoading} onClick={() => pageRef.current = pageRef.current + 1}>Show more</ButtonField>
                 </div>
                 {/* useMemo */}
-                <div>
+                {/* <div>
                     {tinhtong}
                     <button onClick={() => setCount(count + 1)}>Tinh Tong</button>
-                </div>
+                </div> */}
                 
             </div>       
                 
