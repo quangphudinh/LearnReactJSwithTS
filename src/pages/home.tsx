@@ -4,6 +4,8 @@ import { pizza } from "../models/pizza";
 import ItemPizza from "../sections/ItemPizza";
 import CountPizza from "../sections/CountPizza";
 import { title } from "process";
+import ButtonField from "../components/ButtonField";
+import TextField from "../components/TextField";
 
 const HomePage = () => {
 
@@ -80,6 +82,7 @@ const HomePage = () => {
         <>
             {console.log('Render Template')}
             <div style={{height : 'calc(100vh - 309px)', padding : '4rem 4rem' , overflowY : 'auto'}}>
+                <TextField placeholder="Enter Search!" width="250px"/>
                 <div className="wrapper-card-items">
                     {
                         // pizzas.map(item =>  
@@ -89,17 +92,22 @@ const HomePage = () => {
                     }
                     <ItemPizza title={person.title} description={person.description} handleChangePerson={handleChangePerson}/>
                 </div>
-                <br></br>
+                
+                {/* <br></br>
                 <button className="btn-main" onClick={() => setIsCount(true)}>Open Count</button>
                 <button className="btn-main" onClick={() => setIsCount(false)}>Close Count</button>
                 <div>{count}</div>
                 {
                     isCount && <CountPizza count={count} setCount={(count) => setCount(count)}/>
-                }
+                } */}
+                
+                <div style={{display : 'flex', justifyContent : 'center' , width : '100%'}}>
+                    <ButtonField>Show more</ButtonField>
+                </div>
+                
+                
             </div>       
-            <div>
-                <button className="btn-main" onClick={() => setCount(count + 1)}>Count Inscrease</button>
-            </div>
+                
         </>
     )
 }
