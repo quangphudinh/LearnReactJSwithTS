@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CardPizza from "../sections/CardPizza";
 import { pizza } from "../models/pizza";
 import ItemPizza from "../sections/ItemPizza";
@@ -78,6 +78,14 @@ const HomePage = () => {
         dataFetch();
     },[])
 
+    //useMemo
+    //tra lai 1 value
+    //cache lai data
+    //chay lai neu dep[] co su thay doi
+    const tinhtong = useMemo(() => {
+        return count + 1;
+    },[])
+
     return(
         <>
             {console.log('Render Template')}
@@ -104,7 +112,11 @@ const HomePage = () => {
                 <div style={{display : 'flex', justifyContent : 'center' , width : '100%'}}>
                     <ButtonField>Show more</ButtonField>
                 </div>
-                
+                {/* useMemo */}
+                <div>
+                    {tinhtong}
+                    <button onClick={() => setCount(count + 1)}>Tinh Tong</button>
+                </div>
                 
             </div>       
                 
