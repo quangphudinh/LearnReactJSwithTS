@@ -56,16 +56,21 @@ const DetailPizza = () => {
             <LoadingLayout isLoading={!pizza.id}>
                 <div style={{display :  'flex' , alignItems : "center" , columnGap : '2rem'}}>
                     <img width='450px' height='450px' src={pizza.thumbnail} alt="" />
-                    <div style={{alignItems : ''}}>
+                    <div style={{textAlign : 'left'}}>
                         <div style={{marginBottom : '1rem'}}>
                             Product Name : <span style={{fontSize : '24px'}}>{pizza.title}</span>
                         </div>
                         <div style={{marginBottom : '1.5rem'}}>
                             Ingredients : <span style={{fontSize : '24px'}}>{pizza.description}</span>
-                        </div>
-                        <div style={{display : 'flex'}}>
+                        </div>                       
+                        <div style={{display : 'flex'}}> {/* , justifyContent : 'flex-end' */}
                             <ButtonField onClick={() => setIsModal(true)}>Remove Item</ButtonField>
+                            <ButtonField onClick={() => console.log('Edit ...')}>Edit Item</ButtonField>
                         </div>
+                        
+                          
+              
+
                     </div>
                     <ModalLayout 
                         width="40%" 

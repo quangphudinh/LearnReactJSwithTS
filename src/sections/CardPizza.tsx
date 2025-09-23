@@ -29,7 +29,7 @@ const CardPizza = (
                     <div className='text-title'>
                         {title}    
                     </div>
-                    <div className='text-description'>
+                    <div className='text-description card-line-clamp'>
                         {description}
                     </div>
                 </div>

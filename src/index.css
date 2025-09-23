@@ -88,6 +88,14 @@ div {
   justify-content: center;
   height: 50%;
   background: #14274e;
+  border-radius: 5px;
+}
+
+.card-line-clamp{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
 }
 
 /* Text field */
@@ -115,6 +123,7 @@ input {
   font-weight: 300;
   margin-top: .5rem;
   color: #ffff;
+  padding: 0 0.5rem;
 }
 /* Text field */
 
@@ -193,3 +202,10 @@ input {
   text-align: left;
 }
 /* Create Pizza Page */
+
+/* Link */
+.link-no-style{
+  color : inherit;
+  text-decoration: none;
+}
+/* Link */
