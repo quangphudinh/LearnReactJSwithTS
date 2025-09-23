@@ -79,7 +79,7 @@ const HomePage = () => {
                     thumbnail : item.thumbnail
                 }));
                 setTimeout(() => {
-                    setPizzaAPI([...pizzaAPI , ...temp])
+                    setPizzaAPI((prev) => [...prev, ...temp]); //callback
                     setIsLoading(false)
                 }, 1000)
                 
@@ -102,7 +102,7 @@ const HomePage = () => {
                     thumbnail : item.thumbnail
                 }));
                 setTimeout(() => {
-                    setPizzaAPI([...temp])
+                    setPizzaAPI(() => [...temp]); 
                     setIsLoading(false)
                 }, 1000)
 
@@ -112,7 +112,11 @@ const HomePage = () => {
             }
         }
 
-        !searchText?dataFetch():dataSearch();
+        if(!searchText){
+            setPizzaAPI([]);
+            console.log('search text da rong ' ,searchText)
+            dataFetch();
+        }else dataSearch();
 
     },[skip , searchText])
 
