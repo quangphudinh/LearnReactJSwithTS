@@ -5,12 +5,14 @@ import { pizza } from "../models/pizza";
 import { useEffect, useState } from "react";
 import SpinnerLoad from "../components/SpinnerLoad";
 import LoadingLayout from "../layouts/loading_layout";
+import ModalLayout from "../layouts/modal_layout";
 
 const DetailPizza = () => {
 
     const {id} = useParams();
     const [pizza , setPizza] = useState<pizza>({});
     const navigate = useNavigate()
+    const [isModal , setIsModal] = useState(false);
 
     useEffect(() => {
         const getData = async () => {
@@ -62,9 +64,17 @@ const DetailPizza = () => {
                             Ingredients : <span style={{fontSize : '24px'}}>{pizza.description}</span>
                         </div>
                         <div style={{display : 'flex'}}>
-                            <ButtonField onClick={handleRemove}>Remove Item</ButtonField>
+                            <ButtonField onClick={() => setIsModal(true)}>Remove Item</ButtonField>
                         </div>
                     </div>
+                    <ModalLayout 
+                        width="40%" 
+                        title="Do you want remove this Pizza" 
+                        isShow = {isModal}
+                        onClose={() => setIsModal(false)}
+                        onConfirm={handleRemove}
+                    />
+
                 </div>         
             </LoadingLayout>
         </>
