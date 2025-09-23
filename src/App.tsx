@@ -1,12 +1,12 @@
-import React from 'react';
-// import { useState } from 'react';
+import React, { Suspense } from 'react';
 import './App.css';
-import Header from './layouts/header';
 import HomePage from './pages/home';
-import Footer from './layouts/footer';
 import { createBrowserRouter, Outlet, RouteObject, RouterProvider } from 'react-router-dom';
 import MainLayout from './layouts/main_layout';
-import CreatePizzaPage from './pages/create_pizza';
+// import CreatePizzaPage from './pages/create_pizza';
+// import DetailPizza from './pages/detail_pizza';
+const DetailPizza = React.lazy(() => import('./pages/detail_pizza'))
+const CreatePizzaPage = React.lazy(() => import('./pages/create_pizza'))
 
 const appRoutes : RouteObject[] = [
   {
@@ -20,6 +20,10 @@ const appRoutes : RouteObject[] = [
       {
         path : '/create-pizza',
         element : <CreatePizzaPage/>
+      },
+      {
+        path : '/pizza/:id',
+        element : <DetailPizza/>
       }
     ]
   }
@@ -35,7 +39,11 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-  return <RouterProvider router = {router}/>
+  return (
+    <Suspense>
+      <RouterProvider router = {router}/>
+    </Suspense>
+  )
 }
 
 export default App;

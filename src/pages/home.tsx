@@ -8,6 +8,7 @@ import ButtonField from "../components/ButtonField";
 import TextField from "../components/TextField";
 import { IcSprinner } from "../icons/IcSprinner";
 import SpinnerLoad from "../components/SpinnerLoad";
+import LoadingLayout from "../layouts/loading_layout";
 
 const HomePage = () => {
 
@@ -125,20 +126,12 @@ const HomePage = () => {
     },[searchText , skip])
 
     return(
-        <>
-            <div style={{height : 'calc(100vh - 309px)', padding : '4rem 4rem' , overflowY : 'auto'}}>
+        <LoadingLayout isLoading={!pizzaAPI.length}>
+            <div>
                 {/* searching */}
                 <div style={{ display: "flex", justifyContent: "flex-start" }}>
                     <TextField placeholder="Enter Search!" width="350px" onChange={handleSearchText}/>
                 </div>
-
-                {/* Loading */
-                    !pizzaAPI.length && (
-                        <div style={{display : 'flex' , alignItems : 'center' , justifyContent : 'center', height : '100%'}}>
-                            <SpinnerLoad></SpinnerLoad>
-                        </div>
-                    )
-                }
 
                 <div className="wrapper-card-items">
                     {
@@ -166,10 +159,8 @@ const HomePage = () => {
                 <div style={{display : 'flex', justifyContent : 'center' , width : '100%'}}>
                     <ButtonField loading = {isLoading} onClick={handleShowMore}>Show more</ButtonField>
                 </div>
-                
-            </div>       
-                
-        </>
+            </div>        
+        </LoadingLayout>
     )
 }
 

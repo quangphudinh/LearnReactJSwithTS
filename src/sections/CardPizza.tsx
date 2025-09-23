@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.svg'
 import { pizza } from '../models/pizza';
 
@@ -16,8 +17,11 @@ const CardPizza = (
         handleRemovePizza
     } : Props
 ) => {
+
+    const navigate = useNavigate();
+
     return(
-        <div className="card-items" onClick={() => handleRemovePizza(id!)}>
+        <div className="card-items" onClick={() => navigate(`/pizza/${id}`)}>
             <img className="card-image-pizza" src={thumbnail} alt='react-logo'/>
             <div style={{height : '50%' , width : '100%'}}></div>
             <div className='card-content'>
