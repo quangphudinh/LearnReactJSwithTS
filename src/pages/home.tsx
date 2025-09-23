@@ -41,6 +41,10 @@ const HomePage = () => {
     const [isCount , setIsCount] = useState(false);
     const [isLoading , setIsLoading] = useState(false)
     const [skip , setSkip] = useState<number>(0);
+    const [searchText , setSearchText] = useState<string>('');
+    const searchRef = useRef<any>(null);
+
+
     // useEffect(() => {
     //     console.log('Render useEffect');
     //     setPizzas([...pizzas, {id : pizzas.length + 1 , title : 'Pizza Test' , description : 'test useEffect 123'}])
@@ -49,10 +53,18 @@ const HomePage = () => {
     const [pizzaAPI , setPizzaAPI] = useState<pizza[]>([]);
 
     const handleShowMore = () => {
-        setPizzaAPI([])
         setIsLoading(true);
         setSkip(skip + 9)
     }
+
+    const handleSearchText = (value : string) => {
+        clearTimeout(searchRef.current);
+        searchRef.current = setTimeout(() => {
+             setSearchText(value);
+        }, 1000)
+       
+    }
+    
     
     useEffect(() => {
         const dataFetch = async () => {
@@ -67,34 +79,74 @@ const HomePage = () => {
                     thumbnail : item.thumbnail
                 }));
                 setTimeout(() => {
-                    setPizzaAPI(temp)
+                    setPizzaAPI([...pizzaAPI , ...temp])
                     setIsLoading(false)
-                }, 2000)
+                }, 1000)
                 
             } catch (error) {
+                console.log('Error in : Get API')
                 console.error(error)
             }
         }
-        dataFetch();
-    },[skip])
 
+        const dataSearch = async() => {
+            try {
+                console.log(searchText)
+                const res =  await fetch(`https://dummyjson.com/products/search?q=${searchText}`);
+                const data = await res.json();
+                
+                const temp : pizza[] = data.products.map((item : any) => ({
+                    id : item.id,
+                    title : item.title,
+                    description : item.description,
+                    thumbnail : item.thumbnail
+                }));
+                setTimeout(() => {
+                    setPizzaAPI([...temp])
+                    setIsLoading(false)
+                }, 1000)
+
+            } catch (error) {
+                console.log('Error in : Search API')
+                console.error(error)
+            }
+        }
+
+        !searchText?dataFetch():dataSearch();
+
+    },[skip , searchText])
+
+    const searchValue = useMemo(() => {
+        return pizzaAPI.filter(item => item.title?.toUpperCase().indexOf(searchText.toUpperCase()) !== -1);
+    },[searchText , skip])
 
     return(
         <>
             <div style={{height : 'calc(100vh - 309px)', padding : '4rem 4rem' , overflowY : 'auto'}}>
-                {
+                {/* searching */}
+                <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                    <TextField placeholder="Enter Search!" width="350px" onChange={handleSearchText}/>
+                </div>
+
+                {/* Loading */
                     !pizzaAPI.length && (
                         <div style={{display : 'flex' , alignItems : 'center' , justifyContent : 'center', height : '100%'}}>
                             <SpinnerLoad></SpinnerLoad>
                         </div>
                     )
                 }
+
                 <div className="wrapper-card-items">
                     {
                         // pizzas.map(item =>  
                         //     <CardPizza key={item.id} id={item.id} title={item.title} description={item.description} handleRemovePizza={handleRemovePizza}/>)
-                     (pizzaAPI || []).map(item =>  
-                            <CardPizza key={item.id} id={item.id} title={item.title} description={item.description} thumbnail={item.thumbnail} handleRemovePizza={handleRemovePizza}/>)
+                     ( pizzaAPI || []).map(item =>  
+                            <CardPizza key={item.id} 
+                            id={item.id} 
+                            title={item.title} 
+                            description={item.description} 
+                            thumbnail={item.thumbnail} 
+                            handleRemovePizza={handleRemovePizza}/>)
                     }
                     <ItemPizza title={person.title} description={person.description} handleChangePerson={handleChangePerson}/>
                 </div>
