@@ -7,7 +7,7 @@ const Header = () => {
         <div className="flex-basic-between" style={{padding : '1.5rem 4rem'}}> 
             <div style={{fontSize : '40px' , fontWeight : 600}}>9DEVPIZZA</div>
             <TextField placeholder="Enter Search!" width="250px"/>
-            <ButtonField loading={true} >Create Pizza</ButtonField>
+            <ButtonField loading={false} >Create Pizza</ButtonField>
         </div>
     )
 };

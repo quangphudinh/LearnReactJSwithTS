@@ -6,6 +6,8 @@ import CountPizza from "../sections/CountPizza";
 import { title } from "process";
 import ButtonField from "../components/ButtonField";
 import TextField from "../components/TextField";
+import { IcSprinner } from "../icons/IcSprinner";
+import SpinnerLoad from "../components/SpinnerLoad";
 
 const HomePage = () => {
 
@@ -37,72 +39,61 @@ const HomePage = () => {
 
     const [count ,  setCount] = useState(0);
     const [isCount , setIsCount] = useState(false);
-
+    const [isLoading , setIsLoading] = useState(false)
+    const [skip , setSkip] = useState<number>(0);
     // useEffect(() => {
     //     console.log('Render useEffect');
     //     setPizzas([...pizzas, {id : pizzas.length + 1 , title : 'Pizza Test' , description : 'test useEffect 123'}])
     // },[count]);
 
     const [pizzaAPI , setPizzaAPI] = useState<pizza[]>([]);
+
+    const handleShowMore = () => {
+        setPizzaAPI([])
+        setIsLoading(true);
+        setSkip(skip + 9)
+    }
     
     useEffect(() => {
-        // fetch('https://dummyjson.com/products')
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         const temp : pizza[] = data.products.map((item : any) => ({
-        //             id : item.id,
-        //             title : item.title,
-        //             description : item.description,
-        //             thumbnail : item.thumbnail
-        //         }));
-        //         setPizzaAPI(temp)
-        //     }).catch((err) => console.error(err));
-        // console.log(pizzaAPI)
-
         const dataFetch = async () => {
             try {
-                const res = await fetch('https://dummyjson.com/products');
+                const res = await fetch(`https://dummyjson.com/products?limit=9&skip=${skip}&select=title,description,thumbnail`);
                 const data = await res.json();
-                //console.log(data);
+
                 const temp : pizza[] = data.products.map((item : any) => ({
                     id : item.id,
                     title : item.title,
                     description : item.description,
                     thumbnail : item.thumbnail
                 }));
-                setPizzaAPI(temp)
+                setTimeout(() => {
+                    setPizzaAPI(temp)
+                    setIsLoading(false)
+                }, 2000)
+                
             } catch (error) {
                 console.error(error)
             }
         }
         dataFetch();
-    },[])
+    },[skip])
 
-    //useMemo
-    //tra lai 1 value
-    //cache lai data
-    //chay lai neu dep[] co su thay doi
-    const tinhtong = useMemo(() => {
-        return count + 1;
-    },[])
-
-    //useRef
-    // Mỗi khi giá trị của useRef thay đổi sẽ không làm re-render component
-    // Có thể làm thuộc tính tác động trực tiếp vào thẻ DOM
-    const [page , setPage] = useState<number>(1);
-    const pageRef = useRef<HTMLDivElement>(null);
-    const [isLoading , setIsLoading] = useState(false)
 
     return(
         <>
-            {console.log('Render Template')}
             <div style={{height : 'calc(100vh - 309px)', padding : '4rem 4rem' , overflowY : 'auto'}}>
-                <TextField placeholder="Enter Search!" width="250px"/>
+                {
+                    !pizzaAPI.length && (
+                        <div style={{display : 'flex' , alignItems : 'center' , justifyContent : 'center', height : '100%'}}>
+                            <SpinnerLoad></SpinnerLoad>
+                        </div>
+                    )
+                }
                 <div className="wrapper-card-items">
                     {
                         // pizzas.map(item =>  
                         //     <CardPizza key={item.id} id={item.id} title={item.title} description={item.description} handleRemovePizza={handleRemovePizza}/>)
-                     pizzaAPI.map(item =>  
+                     (pizzaAPI || []).map(item =>  
                             <CardPizza key={item.id} id={item.id} title={item.title} description={item.description} thumbnail={item.thumbnail} handleRemovePizza={handleRemovePizza}/>)
                     }
                     <ItemPizza title={person.title} description={person.description} handleChangePerson={handleChangePerson}/>
@@ -116,15 +107,9 @@ const HomePage = () => {
                     isCount && <CountPizza count={count} setCount={(count) => setCount(count)}/>
                 } */}
                 
-                <div ref={pageRef}>Using useRef Hook</div>
                 <div style={{display : 'flex', justifyContent : 'center' , width : '100%'}}>
-                    <ButtonField loading = {isLoading} onClick={() => pageRef.current?.setAttribute('style', 'color : red') }>Show more</ButtonField>
+                    <ButtonField loading = {isLoading} onClick={handleShowMore}>Show more</ButtonField>
                 </div>
-                {/* useMemo */}
-                {/* <div>
-                    {tinhtong}
-                    <button onClick={() => setCount(count + 1)}>Tinh Tong</button>
-                </div> */}
                 
             </div>       
                 
