@@ -115,7 +115,6 @@ const HomePage = () => {
 
         if(!searchText){
             setPizzaAPI([]);
-            console.log('search text da rong ' ,searchText)
             dataFetch();
         }else dataSearch();
 

@@ -46,6 +46,10 @@ div {
   color: #14274e;
 }
 
+.btn.disable{
+  background: #455d8d;
+}
+
 .btn-primary:hover{
   background: #394867;
   color: #fff;
@@ -171,6 +175,21 @@ input {
   padding: 2rem;
   border-radius: 5px;
 }
-
-
 /* Modal Component */
+
+/* Create Pizza Page */
+.wrapper-create{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.form-control {
+  margin-top : 2rem
+}
+
+.form-control .form-div{
+  margin-bottom: 1rem;
+  text-align: left;
+}
+/* Create Pizza Page */
