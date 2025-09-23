@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import logo from '../assets/logo.svg'
 import ButtonField from "../components/ButtonField";
 import { pizza } from "../models/pizza";
@@ -10,6 +10,7 @@ const DetailPizza = () => {
 
     const {id} = useParams();
     const [pizza , setPizza] = useState<pizza>({});
+    const navigate = useNavigate()
 
     useEffect(() => {
         const getData = async () => {
@@ -34,6 +35,20 @@ const DetailPizza = () => {
         getData();
     },[id])
 
+    const handleRemove = async () => {
+        try {
+            const res = await fetch(`https://dummyjson.com/products/${id}`, {
+                method: 'DELETE',
+            })
+            const data = await res.json();
+            if(data.isDeleted)(
+                navigate('/')
+            )
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return(
         <>
             <LoadingLayout isLoading={!pizza.id}>
@@ -47,7 +62,7 @@ const DetailPizza = () => {
                             Ingredients : <span style={{fontSize : '24px'}}>{pizza.description}</span>
                         </div>
                         <div style={{display : 'flex'}}>
-                            <ButtonField>Add to cart</ButtonField>
+                            <ButtonField onClick={handleRemove}>Remove Item</ButtonField>
                         </div>
                     </div>
                 </div>         
