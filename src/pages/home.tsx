@@ -90,7 +90,7 @@ const HomePage = () => {
     // Mỗi khi giá trị của useRef thay đổi sẽ không làm re-render component
     // Có thể làm thuộc tính tác động trực tiếp vào thẻ DOM
     const [page , setPage] = useState<number>(1);
-    const pageRef = useRef<number>(1);
+    const pageRef = useRef<HTMLDivElement>(null);
     const [isLoading , setIsLoading] = useState(false)
 
     return(
@@ -116,9 +116,9 @@ const HomePage = () => {
                     isCount && <CountPizza count={count} setCount={(count) => setCount(count)}/>
                 } */}
                 
-                <button onClick={() => console.log('page reff : ' , pageRef.current)}>Show Ref Value</button>
+                <div ref={pageRef}>Using useRef Hook</div>
                 <div style={{display : 'flex', justifyContent : 'center' , width : '100%'}}>
-                    <ButtonField loading = {isLoading} onClick={() => pageRef.current = pageRef.current + 1}>Show more</ButtonField>
+                    <ButtonField loading = {isLoading} onClick={() => pageRef.current?.setAttribute('style', 'color : red') }>Show more</ButtonField>
                 </div>
                 {/* useMemo */}
                 {/* <div>
