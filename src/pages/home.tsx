@@ -6,6 +6,7 @@ import ButtonField from "../components/ButtonField";
 import TextField from "../components/TextField";
 import LoadingLayout from "../layouts/loading_layout";
 import cantfind from '../assets/cantfind.png'
+import SideBarCategories from "../layouts/category_sidebar";
 
 const HomePage = () => {
 
@@ -133,41 +134,39 @@ const HomePage = () => {
     },[searchText , skip])
 
     return(
-        <LoadingLayout isLoading={!pizzaAPI.length}>
-            <div>
-                {/* searching */}
-                <div style={{ display: "flex", justifyContent: "flex-start" }}>
-                    <TextField placeholder="Enter Search!" width="350px" onChange={handleSearchText}/>
-                </div>
+            <LoadingLayout isLoading={!pizzaAPI.length}>
+                <div style={{display : 'flex'}}>
+                    <div className="wrapper-sidebar">
+                        <SideBarCategories/>
+                    </div>
+                    <div >
+                        {/* searching */}
+                        <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                            <TextField placeholder="Enter Search!" width="350px" onChange={handleSearchText}/>
+                        </div>
 
-                <div className="wrapper-card-items">
-                    {
-                        // pizzas.map(item =>  
-                        //     <CardPizza key={item.id} id={item.id} title={item.title} description={item.description} handleRemovePizza={handleRemovePizza}/>)
-                     ( pizzaAPI || []).map(item =>  
-                            <CardPizza key={item.id} 
-                            id={item.id} 
-                            title={item.title} 
-                            description={item.description} 
-                            thumbnail={item.thumbnail} 
-                            handleRemovePizza={handleRemovePizza}/>)
-                    }
-                    <ItemPizza title={person.title} description={person.description} handleChangePerson={handleChangePerson}/>
-                </div>
-                
-                {/* <br></br>
-                <button className="btn-main" onClick={() => setIsCount(true)}>Open Count</button>
-                <button className="btn-main" onClick={() => setIsCount(false)}>Close Count</button>
-                <div>{count}</div>
-                {
-                    isCount && <CountPizza count={count} setCount={(count) => setCount(count)}/>
-                } */}
-                
-                <div style={{display : 'flex', justifyContent : 'center' , width : '100%'}}>
-                    <ButtonField loading = {isLoading} onClick={handleShowMore}>Show more</ButtonField>
-                </div>
-            </div>        
+                        <div className="wrapper-card-items">
+                            {
+                                // pizzas.map(item =>  
+                                //     <CardPizza key={item.id} id={item.id} title={item.title} description={item.description} handleRemovePizza={handleRemovePizza}/>)
+                            ( pizzaAPI || []).map(item =>  
+                                    <CardPizza key={item.id} 
+                                    id={item.id} 
+                                    title={item.title} 
+                                    description={item.description} 
+                                    thumbnail={item.thumbnail} 
+                                    handleRemovePizza={handleRemovePizza}/>)
+                            }
+                            <ItemPizza title={person.title} description={person.description} handleChangePerson={handleChangePerson}/>
+                        </div>
+                        
+                        <div style={{display : 'flex', justifyContent : 'center' , width : '100%'}}>
+                            <ButtonField loading = {isLoading} onClick={handleShowMore}>Show more</ButtonField>
+                        </div>
+                    </div>   
+                </div>    
         </LoadingLayout>
+
     )
 }
 

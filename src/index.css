@@ -58,10 +58,11 @@ div {
 
 .wrapper-card-items {
   display: flex;
-  column-gap: 4rem;
+  column-gap: 2rem;
   flex-wrap: wrap;
   row-gap: 8rem;
   padding-top: 7rem;
+  justify-content: center;
 }
 
 .card-items {
@@ -98,6 +99,27 @@ div {
   -webkit-line-clamp: 2;
 }
 
+.wrapper-sidebar{
+  margin-top: 1rem;
+  width: 100%;
+  /* position: sticky;
+  top: 100px; */
+}
+
+.wrapper-sidebar-content{
+  display : block;
+  text-transform : capitalize;
+  margin-top: 1rem;
+}
+
+.wrapper-sidebar-content:hover{
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 0, 0, 0.5);
+  font-weight: 600;
+}
+
+
+
 /* Text field */
 .text-field {
   padding: 0.8rem 1rem;
@@ -123,6 +145,13 @@ input {
   font-weight: 300;
   margin-top: .5rem;
   color: #ffff;
+  padding: 0 0.5rem;
+}
+
+.text-sidebar {
+  font-size: 12px;
+  margin-top: .5rem;
+  color: #311a1a;
   padding: 0 0.5rem;
 }
 /* Text field */
