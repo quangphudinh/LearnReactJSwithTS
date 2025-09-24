@@ -63,6 +63,12 @@ div {
   gap: 20px;
 }
 
+.wrapper-body{
+  height : calc(100vh - 309px);
+  padding : 4rem 4rem ;
+  overflow-y : auto;
+}
+
 .wrapper-card-items {
   /* display: flex;
   column-gap: 2rem;
@@ -253,7 +259,73 @@ input {
 }
 /* Link */
 
+/* Footer */
+.footer{
+  text-align : center ;
+  padding : 2rem 0 ;
+  border-top : 1px solid #f1f6f9;
+}
+
+.header{
+  font-size : 40px ;
+  font-weight : 600 ;
+}
+
 /* repository */
+@media (max-width : 900px){
+  .page-layout{
+    grid-template-columns: 150px 1fr;
+  }
+}
 
+@media (max-width : 450px){
+  .page-layout{
+    grid-template-columns: 80px 1fr;
+    gap : 20px;
+  }
 
+  .wrapper-card-items {
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 10px;
+    row-gap: 8rem;
+    margin-top: 8rem;
+  }
+
+  .wrapper-body{
+    height : calc(100vh);
+    padding : 1rem 1rem ;
+    overflow-y : auto;
+  }
+
+  .btn{
+    height: 30px;
+    border-radius: 4px;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+  }
+
+  .content-area{
+    max-width: 250px;
+  }
+
+  .card-image-pizza {
+    width: 200px;
+    position: absolute;
+    top: -90px;
+    left: 18%;
+  }
+
+  .footer{
+    text-align : center ;
+    padding : 1rem 0 ;
+    border-top : 1px solid #f1f6f9;
+    font-size: 12px;
+  }
+  .header{
+    font-size : 20px ;
+    font-weight : 600 ;
+  }
+}
 /* repository */
