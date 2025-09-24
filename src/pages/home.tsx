@@ -2,13 +2,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import CardPizza from "../sections/CardPizza";
 import { pizza } from "../models/pizza";
 import ItemPizza from "../sections/ItemPizza";
-import CountPizza from "../sections/CountPizza";
-import { title } from "process";
 import ButtonField from "../components/ButtonField";
 import TextField from "../components/TextField";
-import { IcSprinner } from "../icons/IcSprinner";
-import SpinnerLoad from "../components/SpinnerLoad";
 import LoadingLayout from "../layouts/loading_layout";
+import cantfind from '../assets/cantfind.png'
 
 const HomePage = () => {
 
@@ -95,13 +92,24 @@ const HomePage = () => {
                 console.log(searchText)
                 const res =  await fetch(`https://dummyjson.com/products/search?q=${searchText}`);
                 const data = await res.json();
+                let temp : pizza[] = [];
+                if(data.total === 0){
+                    temp.push( {
+                        id : 0,
+                        title : `Can't find this products : ${searchText}`,
+                        description : '',
+                        thumbnail : cantfind
+                    })
+                } else {
+                    temp = data.products.map((item : any) => ({
+                        id : item.id,
+                        title : item.title,
+                        description : item.description,
+                        thumbnail : item.thumbnail
+                    }));
+                }
+
                 
-                const temp : pizza[] = data.products.map((item : any) => ({
-                    id : item.id,
-                    title : item.title,
-                    description : item.description,
-                    thumbnail : item.thumbnail
-                }));
                 setTimeout(() => {
                     setPizzaAPI(() => [...temp]); 
                     setIsLoading(false)

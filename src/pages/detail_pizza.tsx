@@ -1,9 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
-import logo from '../assets/logo.svg'
 import ButtonField from "../components/ButtonField";
 import { pizza } from "../models/pizza";
 import { useEffect, useState } from "react";
-import SpinnerLoad from "../components/SpinnerLoad";
 import LoadingLayout from "../layouts/loading_layout";
 import ModalLayout from "../layouts/modal_layout";
 
@@ -63,13 +61,11 @@ const DetailPizza = () => {
                         <div style={{marginBottom : '1.5rem'}}>
                             Ingredients : <span style={{fontSize : '24px'}}>{pizza.description}</span>
                         </div>                       
-                        <div style={{display : 'flex'}}> {/* , justifyContent : 'flex-end' */}
+                        <div style={{display : 'flex' , gap : '10px'}}> {/* , justifyContent : 'flex-end' */}
                             <ButtonField onClick={() => setIsModal(true)}>Remove Item</ButtonField>
-                            <ButtonField onClick={() => console.log('Edit ...')}>Edit Item</ButtonField>
+                            <ButtonField onClick={() => navigate(`/edit-pizza/${id}`)}>Edit Item</ButtonField>
                         </div>
                         
-                          
-              
 
                     </div>
                     <ModalLayout 

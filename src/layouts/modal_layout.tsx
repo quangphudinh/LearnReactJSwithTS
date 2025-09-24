@@ -21,7 +21,7 @@ const ModalLayout = ({width , children , title , isShow , onClose , onConfirm} :
                                 !children?(<div style={{display : 'flex' , flexDirection : 'column' , rowGap : '1rem'}}>
                                     <div style={{fontSize : '22px' , textAlign : 'center'}}>{title}</div>
                                     <div style={{display : 'flex' , columnGap : '1rem' , justifyContent : 'center'}}>
-                                        <ButtonField onClick={onConfirm}>ConFirm</ButtonField>
+                                        <ButtonField onClick={onConfirm}>Confirm</ButtonField>
                                         <ButtonField onClick={onClose} color="primary">Close</ButtonField>
                                     </div>
                                 </div>): children
