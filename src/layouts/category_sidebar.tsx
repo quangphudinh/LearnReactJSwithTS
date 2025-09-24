@@ -32,14 +32,13 @@ const SideBarCategories = ({handleGetCateData} : Props) => {
 
     return(
         <>
-        <div style={{textAlign : 'left' }}>
-            {
-                cateList.map(item =>  
-                    <CardCategory handleFilterCate={(e) => handleFilterCate(e)} name={item.name}/>
-                )           
-            }
-        </div>
-            
+            <div style={{textAlign : 'left' }}>
+                {
+                    cateList.map(item =>  
+                        <CardCategory handleFilterCate={(e) => handleFilterCate(e)} name={item.name}/>
+                    )           
+                }
+            </div> 
         </>
     )
 }
