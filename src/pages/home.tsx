@@ -163,11 +163,11 @@ const HomePage = () => {
 
     return(
             <LoadingLayout isLoading={!pizzaAPI.length}>
-                <div style={{display : 'flex'}}>
+                <div className="page-layout">
                     <div className="wrapper-sidebar">
                         <SideBarCategories handleGetCateData={(e) => handleGetCateData(e)}/>
                     </div>
-                    <div >
+                    <div className="content-area">
                         {/* searching */}
                         <div style={{ display: "flex", justifyContent: "flex-start" }}>
                             <TextField placeholder="Enter Search!" width="350px" onChange={handleSearchText}/>
@@ -175,9 +175,7 @@ const HomePage = () => {
 
                         <div className="wrapper-card-items">
                             {
-                                // pizzas.map(item =>  
-                                //     <CardPizza key={item.id} id={item.id} title={item.title} description={item.description} handleRemovePizza={handleRemovePizza}/>)
-                            ( pizzaAPI || []).map(item =>  
+                                ( pizzaAPI || []).map(item =>  
                                     <CardPizza key={item.id} 
                                     id={item.id} 
                                     title={item.title} 
@@ -194,7 +192,6 @@ const HomePage = () => {
                     </div>   
                 </div>    
         </LoadingLayout>
-
     )
 }
 
