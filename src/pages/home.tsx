@@ -41,6 +41,7 @@ const HomePage = () => {
     const [isLoading , setIsLoading] = useState(false)
     const [skip , setSkip] = useState<number>(0);
     const [searchText , setSearchText] = useState<string>('');
+    const [ifillter , setIfillter] = useState<string>('')
     const searchRef = useRef<any>(null);
 
 
@@ -57,13 +58,17 @@ const HomePage = () => {
     }
 
     const handleSearchText = (value : string) => {
+        setSearchText('')
         clearTimeout(searchRef.current);
         searchRef.current = setTimeout(() => {
              setSearchText(value);
         }, 1000)
-       
     }
     
+    const handleGetCateData = (name : any) => {
+        setSearchText('')
+        setIfillter(name);
+    }
     
     useEffect(() => {
         const dataFetch = async () => {
@@ -110,7 +115,6 @@ const HomePage = () => {
                     }));
                 }
 
-                
                 setTimeout(() => {
                     setPizzaAPI(() => [...temp]); 
                     setIsLoading(false)
@@ -122,12 +126,36 @@ const HomePage = () => {
             }
         }
 
-        if(!searchText){
-            setPizzaAPI([]);
-            dataFetch();
-        }else dataSearch();
+        const dataFillter = async() => {
+            try {
+                const res = await fetch(`https://dummyjson.com/products/category/${ifillter}`);
+                const data = await res.json();
 
-    },[skip , searchText])
+                const temp : pizza[] = data.products.map((item : any) => ({
+                        id : item.id,
+                        title : item.title,
+                        description : item.description,
+                        thumbnail : item.thumbnail
+                    }));
+                    setTimeout(() => {
+                        setPizzaAPI(() => [...temp]);
+                        setIsLoading(false)
+                    }, 1000)
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        if(searchText){
+            setPizzaAPI([]);
+            dataSearch();  
+        }
+        else if(ifillter){
+            setPizzaAPI([]);
+            dataFillter();
+        }else dataFetch();
+
+    },[skip , searchText , ifillter])
 
     const searchValue = useMemo(() => {
         return pizzaAPI.filter(item => item.title?.toUpperCase().indexOf(searchText.toUpperCase()) !== -1);
@@ -137,7 +165,7 @@ const HomePage = () => {
             <LoadingLayout isLoading={!pizzaAPI.length}>
                 <div style={{display : 'flex'}}>
                     <div className="wrapper-sidebar">
-                        <SideBarCategories/>
+                        <SideBarCategories handleGetCateData={(e) => handleGetCateData(e)}/>
                     </div>
                     <div >
                         {/* searching */}

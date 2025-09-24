@@ -5,25 +5,22 @@ import { categories } from '../models/categories';
 
 //filter dữ liệu đầu vào
 //merge type
-// type Props = categories & {
-//     handleRemovePizza : (id : number) => void
-// };
 
-type Props = categories
+type Props = categories & {
+    handleFilterCate : (name? : string) => void
+};
 
 const CardCategory = (
     {
         name,
-        // handleRemovePizza
+        handleFilterCate
     } : Props
 ) => {
 
     const navigate = useNavigate();
 
     return(
-        <div className='wrapper-sidebar-content'
-            onClick={() => console.log(`cate : ${name}`)}
-        >
+        <div key={name} className='wrapper-sidebar-content' onClick={() => handleFilterCate(name)}>
             <div style={{height : '50%' , width : '100%'}}></div>
                 <div className='text-sidebar'>
                     {name}

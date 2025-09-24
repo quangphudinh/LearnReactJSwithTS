@@ -3,10 +3,14 @@ import { categories } from "../models/categories";
 import { useNavigate } from "react-router-dom";
 import CardCategory from "../sections/CardCategories";
 
-const SideBarCategories = () => {
+type Props = categories & {
+    handleGetCateData : (name? : string) => void
+};
+
+const SideBarCategories = ({handleGetCateData} : Props) => {
 
     const [cateList , setCateList] = useState<categories[]>([]);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     useEffect(() => {
         const cateDataFetch = async() => {
@@ -21,12 +25,17 @@ const SideBarCategories = () => {
         cateDataFetch();
     },[])
 
+    const handleFilterCate = (name? : string) => {
+        console.log('CarddCategories : ',name)
+        handleGetCateData(name)
+    }
+
     return(
         <>
         <div style={{textAlign : 'left' }}>
             {
                 cateList.map(item =>  
-                    <CardCategory name={item.name}></CardCategory>
+                    <CardCategory handleFilterCate={(e) => handleFilterCate(e)} name={item.name}/>
                 )           
             }
         </div>
